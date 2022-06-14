@@ -1,4 +1,6 @@
-﻿//Question 1
+﻿using System.Text;
+
+//Question 1
 Dictionary<string, int> coins = new Dictionary<string, int>();
 coins.Add("1", 15);
 coins.Add("2", 15);
@@ -31,7 +33,7 @@ List<int> vendingMachine(Dictionary<string, int> coins, int inputMoney, int item
 
     foreach (int coin in coinReturn)
     {
-        Console.WriteLine("Coin dispensed: " + coin);
+        Console.WriteLine("Coin dispensed: $" + coin);
 
     }
 
@@ -87,4 +89,66 @@ List<int> calculateCoins(Dictionary<string, int> coins, int inputMoney)
 
     }
     return coinReturn;
+}
+
+//Question 2
+
+
+Console.WriteLine("Compressor Function:   "+compressor("RTFFFFYYUPPPeeeuu"));
+Console.WriteLine("Decompressor Function: "+decompressor("RTF4YYUP3E3UU"));
+
+/*
+ Function that compresses duplicate letters more than 2 in length into numbers and returns it as a new string.
+ */
+string compressor(string inputData)
+{
+    inputData = inputData.ToUpper();
+    char[] chars = inputData.ToCharArray();
+
+    StringBuilder sb = new StringBuilder();
+    int counter = 0;
+
+    for (int i = 0; i < chars.Length; i++)
+    {
+        
+        if (i != chars.Length-1 && chars[i] == chars[i + 1])
+        {
+            counter++;
+        }
+        sb.Append(chars[i] + Convert.ToString(counter) + " ");
+    }
+    
+    return sb.ToString();
+}
+
+/*
+ Function that decompresses a compressed string, uses indicated numbers to duplicate the letter preceding it by the number's amount.
+ Returns it as a new string.
+ */
+string decompressor(string inputData)
+{
+    inputData = inputData.ToUpper();
+    char[] chars = inputData.ToCharArray();
+
+    StringBuilder sb = new StringBuilder();
+    int counter = 0;
+
+    for (int i = 0; i < chars.Length; i++)
+    {
+        if (Char.IsNumber(chars[i]) == true)//if its a number, remove the number and add letters.
+        {
+            counter = Convert.ToInt32(Char.GetNumericValue(chars[i]));
+            for(int j = counter; j > 1; j--)
+            {
+                sb.Append(chars[i - 1]);
+            }
+            counter = 0;
+        }
+        else
+        {
+            sb.Append(chars[i]);
+        }
+    }
+
+    return sb.ToString();
 }
